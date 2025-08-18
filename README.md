@@ -1,4 +1,4 @@
-Este es un proyecto de comercio electrónico que consiste en una API RESTful desarrollada con Node.js y Express.js. La aplicación permite gestionar productos, y un sistema de compras completo, con una base de datos MySQL.
+Este es un proyecto de comercio electrónico creado por los alumnos Enriquez Matias y Schaffer Lisandra, que consiste en una API RESTful desarrollada con Node.js y Express.js. La aplicación permite gestionar productos, y un sistema de compras completo, con una base de datos MySQL.
 
 ---
 
