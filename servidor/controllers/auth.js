@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const connection = require('../config/db');
 
-// Lógica para el inicio de sesión del administrador
+// Lógica para el inicio de sesión (admin o usuario)
 exports.login = (req, res) => {
   const { username, password } = req.body;
   const sql = 'SELECT * FROM usuarios WHERE username = ?';
@@ -19,14 +19,33 @@ exports.login = (req, res) => {
     if (!passwordMatch) {
       return res.status(401).json({ error: 'Usuario o contraseña incorrectos' });
     }
-    
-    const token = jwt.sign({ id: user.id }, 'MiClaveSecreta', { expiresIn: '1h' });
+
+    // Generar token con rol incluido
+    const token = jwt.sign(
+      { id: user.id, username: user.username, rol: user.rol },
+      'MiClaveSecreta',
+      { expiresIn: '1h' }
+    );
+
     res.json({ token });
   });
 };
 
-// Lógica para obtener el perfil del administrador
+// Lógica para obtener el perfil (respuesta distinta según el rol)
 exports.getPerfil = (req, res) => {
-  //Lógica de middleware de autenticación
-  res.json({ message: 'Ruta de perfil protegida. Funciona con JWT.' });
+  const { username, rol } = req.user;
+
+  if (rol === 'admin') {
+    res.json({
+      message: `Bienvenido administrador ${username}. Esta es tu ruta protegida.`,
+      acceso: 'completo',
+      rol: 'admin'
+    });
+  } else {
+    res.json({
+      message: `Hola ${username}, esta es tu ruta protegida como usuario.`,
+      acceso: 'limitado',
+      rol: 'user'
+    });
+  }
 };
