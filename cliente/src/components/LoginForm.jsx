@@ -9,8 +9,8 @@ export const LoginForm = ({ onSuccess, showCancel = false, onCancel }) => {
     e.preventDefault();
 
     try {
-      //aca hace la llamada
-      const response = await fetch("http://localhost:3000/login", {
+      // acá hace la llamada
+      const response = await fetch("http://localhost:3000/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
