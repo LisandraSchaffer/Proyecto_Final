@@ -1,8 +1,8 @@
-import React from 'react';
-import RouterApp from './router/RouterApp';
+// import React from 'react';
+// import RouterApp from './router/RouterApp';
 
-function App() {
-  return <RouterApp />
-}
+// function App() {
+//   return <RouterApp />
+// }
 
-export default App;
+// export default App;
