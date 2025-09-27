@@ -1,0 +1,276 @@
+/* Importación de fuentes de Google */
+@import url('https://fonts.googleapis.com/css2?family=Style+Script&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+/* Estilos para el componente Home */
+.home-main {
+  padding-top: 0;
+  font-family: "Roboto", sans-serif;
+  line-height: 1.5;
+  color: black;
+}
+
+/* Títulos */
+.home-main h1,
+.home-main h2,
+.home-main h3 {
+  font-family: "Style Script", cursive;
+  color: #A67D3D;
+}
+
+.home-main h1 {
+  font-size: 80px;
+  padding-top: 10px;
+}
+
+.home-main h2 {
+  font-size: 40px;
+}
+
+.home-main h3 {
+  font-size: 20px;
+}
+
+/* Estilos del Carrusel */
+.carousel {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  overflow: hidden;
+}
+
+.carousel-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-height: 500px;
+}
+
+.carousel-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.6s ease-in-out;
+}
+
+.carousel-item.active {
+  opacity: 1;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.carousel-caption {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  color: black !important;
+}
+
+.carousel-caption h5 {
+  color: black !important;
+  font-weight: bold;
+  font-size: 24px;
+  margin: 0;
+  text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
+}
+
+/* Ocultar caption en dispositivos móviles */
+.d-none {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .d-md-block {
+    display: block;
+  }
+}
+
+/* Indicadores del carrusel */
+.carousel-indicators {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 15;
+}
+
+.carousel-indicators button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.carousel-indicators button.active {
+  background-color: #E8AD38;
+}
+
+.carousel-indicators button:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Controles del carrusel */
+.carousel-control-prev,
+.carousel-control-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+  z-index: 15;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.carousel-control-prev {
+  left: 15px;
+}
+
+.carousel-control-next {
+  right: 15px;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Iconos de los controles */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  width: 20px;
+  height: 20px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.carousel-control-prev-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z'/%3e%3c/svg%3e");
+}
+
+.carousel-control-next-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z'/%3e%3c/svg%3e");
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Secciones */
+.home-main section {
+  padding: 50px 20px;
+  text-align: center;
+}
+
+#inicio {
+  background-color: #F5F5DC;
+}
+
+#productos {
+  background-color: #FAF5E9;
+}
+
+/* Grid de productos */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  padding: 20px;
+}
+
+.product-item {
+  border: 2px solid #A67D3D;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.product-item img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.product-item h3 {
+  margin-top: 0;
+  color: #E8AD38;
+}
+
+.product-item p {
+  margin-bottom: 0;
+  font-weight: bold;
+  color: #A67D3D;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .home-main h1 {
+    font-size: 50px;
+  }
+
+  .home-main h2 {
+    font-size: 30px;
+  }
+
+  .carousel {
+    height: 300px;
+  }
+
+  .carousel-item img {
+    height: 300px;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 10px;
+  }
+
+  .carousel-control-prev,
+  .carousel-control-next {
+    width: 40px;
+    height: 40px;
+  }
+}

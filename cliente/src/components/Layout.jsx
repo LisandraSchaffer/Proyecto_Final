@@ -1,13 +1,15 @@
 import { Footer } from "./Footer";
+import { Header } from "./Header";
 
-const Layout = ({ children }) => {
+const Layout = (props) => {
   return (
-    <div>
+    <div className={props.background}>
+      <Header />
       <main>
+        {props.children}
       </main>
       <Footer />
     </div>
-  );
-};
-
-export { Layout };
+  )
+}
+export { Layout }

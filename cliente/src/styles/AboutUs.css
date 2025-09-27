@@ -1,0 +1,122 @@
+/* Importación de fuentes de Google */
+@import url('https://fonts.googleapis.com/css2?family=Style+Script&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+/* Estilos para el componente About Us */
+#sobre-nosotros {
+  background-color: #E8AD38;
+  color: black;
+  font-family: "Roboto", sans-serif;
+}
+
+/* Estilos del grid "Sobre Nosotros" */
+.nosotros {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 50px 20px;
+  text-align: center;
+}
+
+.nosotros h2 {
+  grid-column: 1 / -1;
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: "Style Script", cursive;
+  color: #A67D3D;
+  font-size: 40px;
+}
+
+.nosotros-item {
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.nosotros-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.nosotros-item h3 {
+  font-family: "Style Script", cursive;
+  font-size: 30px;
+  color: #A67D3D;
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+.nosotros-item p {
+  line-height: 1.6;
+  text-align: justify;
+  color: #333;
+  margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .nosotros {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    padding: 40px 15px;
+  }
+
+  .nosotros h2 {
+    font-size: 35px;
+  }
+
+  .nosotros-item h3 {
+    font-size: 25px;
+  }
+}
+
+@media (max-width: 768px) {
+  .nosotros {
+    grid-template-columns: 1fr;
+    gap: 15px;
+    padding: 30px 15px;
+  }
+
+  .nosotros h2 {
+    font-size: 30px;
+    margin-bottom: 15px;
+  }
+
+  .nosotros-item {
+    padding: 15px;
+  }
+
+  .nosotros-item h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+
+  .nosotros-item p {
+    font-size: 14px;
+    text-align: left;
+  }
+}
+
+@media (max-width: 480px) {
+  .nosotros {
+    padding: 20px 10px;
+  }
+
+  .nosotros h2 {
+    font-size: 25px;
+  }
+
+  .nosotros-item {
+    padding: 12px;
+  }
+
+  .nosotros-item h3 {
+    font-size: 20px;
+  }
+
+  .nosotros-item p {
+    font-size: 13px;
+  }
+}

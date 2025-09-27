@@ -1,18 +1,23 @@
 import { Link } from "react-router-dom";
+import "../styles/Header.css";
+import logo from "../assets/logo.jpeg"
 
 const Header = () => {
   return (
-    <nav>
+    <header>
       <div className="logo">
-        {/* Logo aquí */}
+        <img src={logo} alt="Logo Néctar de Sol" />
       </div>
-      <ul>
-        <li><Link to="/">Inicio</Link></li>
-        <li><Link to="/productos">Productos</Link></li>
-        <li><Link to="/sobre-nosotros">Sobre Nosotros</Link></li>
-        <li><Link to="/login">Login</Link></li>
-      </ul>
-    </nav>
+      <nav>
+        <ul>
+          <li><Link to="/">Inicio</Link></li>
+          <li><Link to="/Productos">Productos</Link></li>
+          <li><Link to="/SobreNosotros">Sobre Nosotros</Link></li>
+          <li><Link to="/login">Iniciar Sesión</Link></li>
+          <li><Link to="/register">Registrarse</Link></li>
+        </ul>
+      </nav>
+    </header>
   );
 };
 
