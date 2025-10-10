@@ -8,7 +8,9 @@ const authMiddleware = (req, res, next) => {
   }
 
   // Bearer token
-  const token = authHeader.replace('Bearer ', '');
+  console.log('Authorization header completo:', authHeader);
+
+  const token = authHeader.split(' ')[1]?.trim();
 
   const secretKey = 'MiClaveSecreta';
 

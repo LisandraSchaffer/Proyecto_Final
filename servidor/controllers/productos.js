@@ -22,13 +22,20 @@ exports.getProductoById = (req, res) => {
   });
 };
 
-// Lógica para crear un nuevo producto (PROTEGIDA)
+// Lógica para crear un nuevo producto (PROTEGIDA + imagen)
 exports.createProducto = (req, res) => {
-  const { nombre, descripcion, precio, stock, categoria, imagen_url } = req.body;
+  const { nombre, descripcion, precio, stock, categoria } = req.body;
+
+  // Construir la URL de la imagen si se subió
+  let imagen_url = null;
+  if (req.file) {
+    imagen_url = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+  }
+
   const sql = 'INSERT INTO productos (nombre, descripcion, precio, stock, categoria, imagen_url) VALUES (?, ?, ?, ?, ?, ?)';
   connection.query(sql, [nombre, descripcion, precio, stock, categoria, imagen_url], (err, result) => {
     if (err) return res.status(500).json({ error: 'Error al crear el producto.' });
-    res.status(201).json({ id: result.insertId, ...req.body });
+    res.status(201).json({ id: result.insertId, nombre, descripcion, precio, stock, categoria, imagen_url });
   });
 };
 

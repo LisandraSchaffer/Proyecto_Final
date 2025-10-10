@@ -1,13 +1,19 @@
 const express = require('express');
-const cors = require('cors'); // NUEVO
+const cors = require('cors');
+const path = require('path'); 
+
 const app = express();
 
-app.use(cors()); // NUEVO
-app.use(express.json());
+app.use(cors());
+app.use(express.json()); 
+app.use(express.urlencoded({ extended: true })); 
+
+// Servir archivos estáticos desde la carpeta uploads con ruta absoluta
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 const db = require('./config/db');
 
-// Importacion de las rutas
+// Importación de las rutas
 const authRoutes = require('./routes/auth');
 const productosRoutes = require('./routes/productos');
 const carritoRoutes = require('./routes/carrito');
