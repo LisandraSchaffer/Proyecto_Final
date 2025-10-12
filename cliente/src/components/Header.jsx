@@ -1,9 +1,8 @@
-// src/components/Header.jsx
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../styles/Header.css";
 import logo from "../assets/logo.jpeg";
-import { LoginForm } from "./LoginForm";
+import LoginForm from "./LoginForm";
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -28,7 +27,7 @@ const Header = () => {
 
   return (
     <header>
-      <div className="logo">
+      <div>
         <img src={logo} alt="Logo Néctar de Sol" />
       </div>
       <nav>
@@ -46,7 +45,7 @@ const Header = () => {
           ) : (
             <>
               <li>
-                <button onClick={() => setShowLogin(!showLogin)} className="login-btn">
+                <button onClick={() => setShowLogin(!showLogin)}>
                   Iniciar Sesión
                 </button>
               </li>
@@ -56,7 +55,7 @@ const Header = () => {
         </ul>
 
         {showLogin && !isLoggedIn && (
-          <div className="login-form">
+          <div>
             <LoginForm
               onSuccess={handleLoginSuccess}
               showCancel={true}
@@ -69,4 +68,4 @@ const Header = () => {
   );
 };
 
-export { Header };
+export default Header;

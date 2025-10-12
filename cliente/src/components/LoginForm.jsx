@@ -1,16 +1,20 @@
 import { useState } from "react";
 
-export const LoginForm = ({ onSuccess, showCancel = false, onCancel }) => {
+const API_URL = "http://localhost:3000/api/auth/login";
+
+const LoginForm = ({ onSuccess, showCancel = false, onCancel }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setError("");
+    setIsLoading(true); // Inicia el estado de carga
 
     try {
-      // acá hace la llamada
-      const response = await fetch("http://localhost:3000/api/auth/login", {
+      const response = await fetch(API_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -21,54 +25,69 @@ export const LoginForm = ({ onSuccess, showCancel = false, onCancel }) => {
       const data = await response.json();
 
       if (response.ok) {
-        localStorage.setItem("token", data.token);
-        setError("");
-        if (onSuccess) onSuccess();
+        if (onSuccess) {
+          onSuccess(data.token);
+        }
       } else {
         setError(data.error || "Credenciales incorrectas");
       }
     } catch (err) {
-      setError("Error de conexión con el servidor");
+      setError("Error de conexión con el servidor. Inténtalo de nuevo.");
+    } finally {
+      // Se ejecuta siempre, tanto si hay éxito como si hay error.
+      setIsLoading(false); // Finaliza el estado de carga
     }
   };
 
   return (
-    <form onSubmit={handleLogin} className="login-form-inline">
+    <form onSubmit={handleLogin} className={`login-form-modal ${isLoading ? 'loading' : ''}`}>
+      <h3>Iniciar Sesión</h3>
       <div className="form-group">
+        <label htmlFor="username">Usuario</label>
         <input
+          id="username"
           type="text"
-          placeholder="Usuario"
+          placeholder="Tu nombre de usuario"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
+          disabled={isLoading} // El campo se deshabilita mientras carga
         />
       </div>
 
       <div className="form-group">
+        <label htmlFor="password">Contraseña</label>
         <input
+          id="password"
           type="password"
-          placeholder="Contraseña"
+          placeholder="Tu contraseña"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
+          disabled={isLoading}
         />
       </div>
 
-      {error && <p className="login-error-inline">{error}</p>}
+      {error && <p className="login-error">{error}</p>}
 
-      <button type="submit" className="btn-login-inline">
-        Ingresar
-      </button>
-
-      {showCancel && onCancel && (
-        <button
-          type="button"
-          className="btn-cancel-inline"
-          onClick={onCancel}
-        >
-          Cancelar
+      <div className="form-actions">
+        <button type="submit" className="btn-login" disabled={isLoading}>
+          {isLoading ? "Ingresando..." : "Ingresar"}
         </button>
-      )}
+
+        {showCancel && onCancel && (
+          <button
+            type="button"
+            className="btn-cancel"
+            onClick={onCancel}
+            disabled={isLoading}
+          >
+            Cancelar
+          </button>
+        )}
+      </div>
     </form>
   );
 };
+
+export default LoginForm;

@@ -1,197 +1,156 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  background-color: #f9f9f9;
+}
+
 header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  height: 90px;
-  background-color: #E8AD38;
+  background-color: #FFFFFF;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
+  padding: 1rem 5%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+  position: sticky;
+  top: 0;
   z-index: 100;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
-.logo {
-  position: absolute;
-  left: 20px;
-  top: 50%;
-  transform: translateY(-50%);
+header div img {
+  max-height: 50px;
+  display: block;
 }
 
-.logo img {
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  border: 2px solid white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-nav {
+header nav {
   position: relative;
 }
 
-nav ul {
-  list-style: none;
+header nav ul {
   margin: 0;
   padding: 0;
+  list-style: none;
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 1.5rem;
 }
 
-nav li {
-  margin: 0;
-}
-
-nav a,
-nav .login-btn,
-nav .logout-btn {
+header nav ul li a,
+header nav ul li button {
+  font-family: 'Poppins', sans-serif;
   text-decoration: none;
-  color: white;
-  font-weight: bold;
-  font-size: 1.1rem;
-  padding: 8px 12px;
-  border-radius: 6px;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  background: transparent;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333;
+  background-color: transparent;
   border: none;
-  display: inline-block;
-  text-align: center;
+  cursor: pointer;
+  padding: 0.5rem 0;
+  transition: all 0.3s ease;
+  position: relative;
 }
 
-nav a:hover,
-nav .login-btn:hover,
-nav .logout-btn:hover {
-  color: #fff;
-  background-color: #A67D3D;
-  transform: scale(1.05);
-}
-
-.login-form {
+header nav ul li a::after {
+  content: '';
   position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #E8AD38;
+  transition: width 0.3s ease;
+}
+
+header nav ul li a:hover::after {
+  width: 100%;
+}
+
+/* Estilo para los botones (Iniciar Sesión, Cerrar Sesión) */
+header nav ul li button {
+  background-color: #A67D3D;
+  color: #FFFFFF;
+  padding: 0.6rem 1.2rem;
+  border-radius: 5px;
+}
+
+header nav ul li button:hover {
+  background-color: #E8AD38;
+}
+
+header nav ul li a[href="/Register"] {
+  color: #A67D3D;
+  font-weight: 700;
+}
+
+header nav ul li a[href="/register"]:hover {
+  color: #E8AD38;
+}
+
+header nav ul li a[href="/register"]::after {
+  display: none;
+}
+
+
+/* --- Estilos para el formulario de login --- */
+header nav>div {
+  position: absolute;
+  width: 50%;
   top: 100%;
   right: 0;
-  background-color: #E8AD38;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  background-color: #FFFFFF;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   z-index: 101;
-  min-width: 240px;
-  margin-top: 8px;
 }
 
-.login-form form {
+.form-group {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  align-items: center;
+  margin-bottom: 1rem;
+  margin-right: 2rem;
 }
 
-.login-form input {
+.form-group label {
+  width: 50px;
+  text-align: right;
+  font-weight: 500;
+}
+
+.form-group input {
+  flex-grow: 1;
   width: 100%;
-  padding: 10px;
-  border: none;
-  border-radius: 6px;
-  background-color: white;
-  color: #333;
-  font-size: 1rem;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
-.login-form input::placeholder {
-  color: #999;
-}
+/* --- Diseño Responsivo para celulares --- */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
 
-.login-form button {
-  width: 100%;
-  padding: 10px;
-  border: none;
-  border-radius: 6px;
-  font-weight: bold;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.25s ease;
-}
+  header nav ul {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    width: 100%;
+  }
 
-.login-form button[type="submit"] {
-  background-color: #A67D3D;
-  color: white;
-}
+  header nav ul li {
+    width: 100%;
+  }
 
-.login-form button[type="submit"]:hover {
-  background-color: #8a652f;
-  transform: scale(1.03);
-}
+  header nav ul li button {
+    width: 100%;
+    text-align: left;
+  }
 
-.login-form button[type="button"] {
-  background-color: #6c757d;
-  color: white;
-}
-
-.login-form button[type="button"]:hover {
-  background-color: #5a6268;
-  transform: scale(1.03);
-}
-
-.login-form-inline {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  width: 100%;
-}
-
-.login-form-inline .form-group input {
-  width: 92%;
-  padding: 10px;
-  border: none;
-  border-radius: 6px;
-  background-color: white;
-  color: #333;
-  font-size: 1rem;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.login-form-inline .form-group input::placeholder {
-  color: #999;
-}
-
-.login-error-inline {
-  color: #ff6b6b;
-  font-size: 0.85rem;
-  margin: 4px 0;
-  text-align: center;
-}
-
-.btn-login-inline,
-.btn-cancel-inline {
-  width: 100%;
-  padding: 10px;
-  border: none;
-  border-radius: 6px;
-  font-weight: bold;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.25s ease;
-}
-
-.btn-login-inline {
-  background-color: #A67D3D;
-  color: white;
-}
-
-.btn-login-inline:hover {
-  background-color: #8a652f;
-  transform: scale(1.03);
-}
-
-.btn-cancel-inline {
-  background-color: #6c757d;
-  color: white;
-  margin-top: 6px;
-}
-
-.btn-cancel-inline:hover {
-  background-color: #5a6268;
-  transform: scale(1.03);
+  header nav>div {
+    width: calc(100% - 3rem);
+    right: auto;
+    left: 0;
+  }
 }

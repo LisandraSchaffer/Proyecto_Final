@@ -1,54 +1,110 @@
-/* Footer */
-.footer {
+/* --- Contenedor Principal del Footer --- */
+.footer-container {
   background-color: #A67D3D;
-  color: white;
-  text-align: center;
-  padding: 20px;
-  margin-top: 40px;
+  color: #FFFFFF;
+  padding: 3rem 5%;
+  font-family: 'Poppins', sans-serif;
 }
 
-.footer-content {
+/* Sección Principal */
+.footer-main {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2.5rem;
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid rgba(232, 173, 56, 0.5);
 }
 
-.footer-brand {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+/* Estilo común para cada columna */
+.footer-brand,
+.footer-nav,
+.footer-social {
+  flex: 1;
+  min-width: 220px;
 }
 
-.footer-logo {
-  width: 70px;
-  height: 70px;
+/* --- Columna de la Marca --- */
+.footer-brand .footer-logo {
+  max-height: 60px;
+  /* Tamaño del logo */
+  margin-bottom: 1rem;
   border-radius: 50%;
-  margin-bottom: 10px;
 }
 
-.footer-links ul {
-  list-style: none;
+.footer-brand h4 {
+  margin: 0 0 0.5rem 0;
+  color: #FFFFFF;
+}
+
+.footer-brand p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.95rem;
+}
+
+
+/* --- Columnas de Navegación y Sociales --- */
+.footer-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+  color: #E8AD38;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.footer-nav ul {
   padding: 0;
+  list-style: none;
+}
+
+.footer-nav li {
+  margin-bottom: 0.8rem;
+}
+
+.footer-nav a {
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.85);
+  transition: all 0.3s ease;
+}
+
+.footer-nav a:hover {
+  color: #FFFFFF;
+  padding-left: 8px;
+}
+
+/* --- Columna de Redes Sociales --- */
+.social-icons {
+  display: flex;
+  gap: 1.5rem;
+  /* Espacio entre los íconos */
+}
+
+.social-icons a {
+  display: inline-block;
+  font-size: 1.5rem;
+  color: #FFFFFF;
+  transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: #E8AD38;
+  transform: translateY(-3px);
+}
+
+.social-icons p {
   margin: 0;
 }
 
-.footer-links li {
-  margin: 5px 0;
-}
-
-.footer-links a {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-  transition: color 0.3s ease;
-}
-
-.footer-links a:hover {
-  color: #E8AD38;
-}
-
+/* --- Sección Inferior (Copyright) --- */
 .footer-bottom {
-  margin-top: 20px;
-  font-size: 14px;
+  text-align: center;
+  padding-top: 2rem;
+}
+
+.footer-bottom p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
 }
