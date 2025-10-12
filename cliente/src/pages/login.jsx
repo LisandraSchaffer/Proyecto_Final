@@ -1,8 +1,8 @@
-import { Layout } from "../components/Layout";
+import Layout from "../components/Layout";
 import "../styles/Login.css";
-import { LoginForm } from "../components/LoginForm";
-const Login = () => {
+import LoginForm from "../components/LoginForm";
 
+const Login = () => {
   return (
     <Layout>
       <section className="login">

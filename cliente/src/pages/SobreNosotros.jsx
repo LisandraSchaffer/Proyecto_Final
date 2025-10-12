@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout } from "../components/Layout";
+import Layout from "../components/Layout";
 import '../styles/AboutUs.css';
 
 const AboutUs = () => {
@@ -23,17 +23,15 @@ const AboutUs = () => {
   ];
 
   return (
-    <Layout>
-      <section id="sobre-nosotros" className="nosotros">
-        <h2>Sobre Nosotros</h2>
-        {aboutSections.map((section) => (
-          <div key={section.id} className="nosotros-item">
-            <h3>{section.title}</h3>
-            <p>{section.content}</p>
-          </div>
-        ))}
-      </section>
-    </Layout>
+    <section id="sobre-nosotros" className="nosotros">
+      <h2>Sobre Nosotros</h2>
+      {aboutSections.map((section) => (
+        <div key={section.id} className="nosotros-item">
+          <h3>{section.title}</h3>
+          <p>{section.content}</p>
+        </div>
+      ))}
+    </section>
   );
 };
 
