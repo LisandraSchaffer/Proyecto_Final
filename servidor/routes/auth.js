@@ -11,8 +11,8 @@ const isAdmin = require('../middlewares/isAdmin');
 // Ruta de login (acceso para todos)
 router.post('/login', authController.login);
 
-// Ruta de registro (solo accesible para administradores)
-router.post('/register', authController.registerUsuario);
+// Ruta de registro 
+router.post('/registro', authController.registerUsuario);
 
 // Exportar el router al final
 module.exports = router;

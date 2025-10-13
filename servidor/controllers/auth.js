@@ -8,7 +8,10 @@ exports.login = (req, res) => {
   const sql = 'SELECT * FROM usuarios WHERE username = ?';
 
   connection.query(sql, [username], (err, results) => {
-    if (err) return res.status(500).json({ error: 'Error del servidor.' });
+    if (err) {
+      console.error('Error en login:', err);
+      return res.status(500).json({ error: 'Error del servidor.' });
+    }
 
     if (
       results.length === 0 ||
@@ -24,6 +27,7 @@ exports.login = (req, res) => {
       { expiresIn: '1h' }
     );
 
+    console.log('Login exitoso para:', user.username);
     res.json({ token });
   });
 };
@@ -31,6 +35,7 @@ exports.login = (req, res) => {
 // REGISTRO
 exports.registerUsuario = async (req, res) => {
   const { username, email, contraseña, confirmarContraseña } = req.body;
+ 
 
   // Validaciones
   if (!username || !email || !contraseña || !confirmarContraseña) {
@@ -66,6 +71,7 @@ exports.registerUsuario = async (req, res) => {
 
     connection.query(sql, [username, email, hashedPassword, 'usuario'], (err, result) => {
       if (err) {
+
         if (err.code === 'ER_DUP_ENTRY') {
           return res.status(400).json({ error: 'El nombre de usuario o el correo electrónico ya están registrados.' });
         }
@@ -75,6 +81,7 @@ exports.registerUsuario = async (req, res) => {
       res.status(201).json({ mensaje: 'Usuario registrado con éxito.' });
     });
   } catch (error) {
+    console.error('Error interno del servidor:', error);
     res.status(500).json({ error: 'Error interno del servidor.' });
   }
 };
