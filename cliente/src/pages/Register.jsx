@@ -7,7 +7,8 @@ const Register = () => {
     username: "",
     email: "",
     contraseña: "",
-    confirmarContraseña: ""
+    confirmarContraseña: "",
+    rol: "cliente" // valor por defecto, no visible en el formulario
   });
 
   const handleChange = (e) => {

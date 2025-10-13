@@ -22,7 +22,7 @@ exports.login = (req, res) => {
 
     const user = results[0];
     const token = jwt.sign(
-      { id: user.id, username: user.username },
+      { id: user.id, username: user.username, rol: user.rol }, // rol incluido desde la base de datos
       'MiClaveSecreta',
       { expiresIn: '1h' }
     );
@@ -35,7 +35,7 @@ exports.login = (req, res) => {
 // REGISTRO
 exports.registerUsuario = async (req, res) => {
   const { username, email, contraseña, confirmarContraseña } = req.body;
- 
+  const rol = "cliente"; // rol asignado automáticamente
 
   // Validaciones
   if (!username || !email || !contraseña || !confirmarContraseña) {
@@ -69,9 +69,8 @@ exports.registerUsuario = async (req, res) => {
     const hashedPassword = await bcrypt.hash(contraseña, 10);
     const sql = 'INSERT INTO usuarios (username, email, password, rol) VALUES (?, ?, ?, ?)';
 
-    connection.query(sql, [username, email, hashedPassword, 'usuario'], (err, result) => {
+    connection.query(sql, [username, email, hashedPassword, rol], (err, result) => {
       if (err) {
-
         if (err.code === 'ER_DUP_ENTRY') {
           return res.status(400).json({ error: 'El nombre de usuario o el correo electrónico ya están registrados.' });
         }

@@ -1,25 +1,27 @@
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
-
-// Reutiliza la lógica del Header para obtener el rol del token
-const getRoleFromToken = (token) => {
-  if (!token) return null;
-  if (token === "admin-token") {
-    return 'admin';
-  }
-  return 'user';
-};
+import { jwtDecode } from 'jwt-decode';
 
 const ProtectedRoute = () => {
   const token = localStorage.getItem("token");
-  const userRole = getRoleFromToken(token);
 
-  // Si el rol no es 'admin', redirige al usuario a la página de inicio
-  if (userRole !== 'admin') {
+  if (!token) {
     return <Navigate to="/" replace />;
   }
 
-  // Si el rol es 'admin', permite el acceso a la ruta solicitada
+  let userRole = null;
+  try {
+    const decoded = jwtDecode(token);
+    userRole = decoded.rol;
+  } catch (error) {
+    console.error("Error al decodificar el token:", error);
+    return <Navigate to="/" replace />;
+  }
+
+  if (userRole !== "administrador") {
+    return <Navigate to="/" replace />;
+  }
+
   return <Outlet />;
 };
 

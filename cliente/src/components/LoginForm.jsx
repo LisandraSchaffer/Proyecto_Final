@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { jwtDecode } from 'jwt-decode';
 
 const API_URL = "http://localhost:3000/api/auth/login";
 
@@ -11,7 +12,7 @@ const LoginForm = ({ onSuccess, showCancel = false, onCancel }) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
-    setIsLoading(true); // Inicia el estado de carga
+    setIsLoading(true);
 
     try {
       const response = await fetch(API_URL, {
@@ -25,8 +26,18 @@ const LoginForm = ({ onSuccess, showCancel = false, onCancel }) => {
       const data = await response.json();
 
       if (response.ok) {
+        const token = data.token;
+        localStorage.setItem("token", token);
+        const decoded = jwtDecode(token);
+
+        if (decoded.rol === "administrador") {
+          window.location.href = "/AdminPanel";
+        } else {
+          window.location.href = "/";
+        }
+
         if (onSuccess) {
-          onSuccess(data.token);
+          onSuccess(token);
         }
       } else {
         setError(data.error || "Credenciales incorrectas");
@@ -34,13 +45,12 @@ const LoginForm = ({ onSuccess, showCancel = false, onCancel }) => {
     } catch (err) {
       setError("Error de conexión con el servidor. Inténtalo de nuevo.");
     } finally {
-      // Se ejecuta siempre, tanto si hay éxito como si hay error.
-      setIsLoading(false); // Finaliza el estado de carga
+      setIsLoading(false);
     }
   };
 
   return (
-    <form onSubmit={handleLogin} className={`login-form-modal ${isLoading ? 'loading' : ''}`}>
+    <form onSubmit={handleLogin} className={`login-form-modal ${isLoading ? "loading" : ""}`}>
       <h3>Iniciar Sesión</h3>
       <div className="form-group">
         <label htmlFor="username">Usuario</label>
@@ -51,7 +61,7 @@ const LoginForm = ({ onSuccess, showCancel = false, onCancel }) => {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
-          disabled={isLoading} // El campo se deshabilita mientras carga
+          disabled={isLoading}
         />
       </div>
 
