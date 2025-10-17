@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 const connection = require('../config/db');
 
 // Importar los middlewares
@@ -12,13 +13,21 @@ router.post('/login', (req, res) => {
   const { email, username, password } = req.body;
   const identificador = email || username;
 
-  const query = 'SELECT id FROM usuarios WHERE (email = ? OR username = ?) AND password = ?';
-  connection.query(query, [identificador, identificador, password], (err, resultados) => {
+  const query = 'SELECT * FROM usuarios WHERE email = ? OR username = ?';
+  connection.query(query, [identificador, identificador], (err, resultados) => {
     if (err) return res.status(500).json({ error: 'Error en la base de datos.' });
     if (resultados.length === 0) return res.status(401).json({ error: 'Credenciales inválidas.' });
 
-    const usuarioId = resultados[0].id;
-    const token = jwt.sign({ id: usuarioId }, 'MiClaveSecreta', { expiresIn: '1h' });
+    const usuario = resultados[0];
+    const coincide = bcrypt.compareSync(password, usuario.password);
+    if (!coincide) return res.status(401).json({ error: 'Credenciales inválidas.' });
+
+    const token = jwt.sign(
+      { id: usuario.id, username: usuario.username, rol: usuario.rol },
+      'MiClaveSecreta',
+      { expiresIn: '1h' }
+    );
+
     res.json({ token });
   });
 });
