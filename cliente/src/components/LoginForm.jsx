@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { jwtDecode } from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
+import { toast, Bounce } from "react-toastify"; // Importamos Toastify
 
 const API_URL = "http://localhost:3000/api/auth/login";
 
@@ -30,19 +31,62 @@ const LoginForm = ({ onSuccess, showCancel = false, onCancel }) => {
         localStorage.setItem("token", token);
         const decoded = jwtDecode(token);
 
-        if (decoded.rol === "administrador") {
-          window.location.href = "/AdminPanel";
-        } else {
-          window.location.href = "/";
-        }
+        //nuevo, se guarda el rol en localstore pada poder comparar y mostrar accesos según roll
+        localStorage.setItem("userRole", decoded.rol);
 
-        if (onSuccess) {
-          onSuccess(token);
-        }
+        // Notificación de login exitoso con Toastify
+        toast.success("Login Exitoso!", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+
+        setTimeout(() => {
+          if (decoded.rol === "administrador") {
+            window.location.href = "/";
+          }
+
+          //aca pasa el rol y se evalua que onda
+          if (onSuccess) {
+            onSuccess(decoded.rol);
+          }
+        }, 1000);
       } else {
+        // Notificación de error si las credenciales son incorrectas
+        toast.error("No se pudo iniciar sesión", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+
         setError(data.error || "Credenciales incorrectas");
       }
     } catch (err) {
+      // Notificación de error si hay problemas con el servidor
+      toast.error("No se pudo iniciar sesión", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+
       setError("Error de conexión con el servidor. Inténtalo de nuevo.");
     } finally {
       setIsLoading(false);
@@ -50,7 +94,10 @@ const LoginForm = ({ onSuccess, showCancel = false, onCancel }) => {
   };
 
   return (
-    <form onSubmit={handleLogin} className={`login-form-modal ${isLoading ? "loading" : ""}`}>
+    <form
+      onSubmit={handleLogin}
+      className={`login-form-modal ${isLoading ? "loading" : ""}`}
+    >
       <h3>Iniciar Sesión</h3>
       <div className="form-group">
         <label htmlFor="username">Usuario</label>

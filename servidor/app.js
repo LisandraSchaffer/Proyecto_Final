@@ -9,6 +9,14 @@ const authMiddleware = require('./middlewares/authMiddleware');
 
 const app = express();
 
+// Configuración CORS
+app.use(cors({
+  origin: 'http://localhost:5173', // URL del frontend
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // agregué PUT, DELETE y OPTIONS para el CRUD
+  credentials: true, // permite enviar cookies y headers de autorización
+  allowedHeaders: ['Content-Type', 'Authorization'], // permitir Authorization header
+}));
+
 // Middleware
 app.use(cors());
 app.use(express.json());

@@ -1,4 +1,11 @@
 const connection = require('../config/db');
+const authMiddleware = require('../middlewares/authMiddleware');
+const isAdmin = require('../middlewares/isAdmin');
+
+router.post('/', authMiddleware, isAdmin, productosController.createProducto);
+router.put('/:id', authMiddleware, isAdmin, productosController.updateProducto);
+router.delete('/:id', authMiddleware, isAdmin, productosController.deleteProducto);
+
 
 // Lógica para obtener todos los productos (PÚBLICA)
 exports.getAllProductos = (req, res) => {

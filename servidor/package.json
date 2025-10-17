@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "main": "app.js",
   "scripts": {
+    "start": "node servidor/app.js",
     "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
