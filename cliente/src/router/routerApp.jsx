@@ -9,26 +9,44 @@ import Register from '../pages/register';
 import AdminPanel from '../pages/AdminPanel';
 import Layout from '../components/Layout';
 import ProtectedRoute from '../components/ProtectedRoute';
+import { Navigate, Outlet } from 'react-router-dom';
 
 function RouterApp() {
+  const ProtectedRoute = () => {
+    const token = localStorage.getItem("token");
+    const role = localStorage.getItem("userRole");
+
+    // Si no hay token, redirige al login
+    if (!token) {
+      return <Navigate to="/login" replace />;
+    }
+
+    // Si el usuario no es administrador, redirige a la página principal
+    if (role !== "administrador") {
+      return <Navigate to="/" replace />;
+    }
+
+    // Si tiene token y rol administrador, mostramos la ruta protegida
+    return <Outlet />;
+  };
   return (
     <BrowserRouter>
       <Routes>
+        {/* --- RUTAS NO PROTEGIDAS --- */}
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="Productos" element={<Productos />} />
           <Route path="SobreNosotros" element={<SobreNosotros />} />
-          <Route path="/Register" element={<Register />} />
+          <Route path="register" element={<Register />} />
+
+          {/* Rutas protegidas dentro del layout */}
+          <Route element={<ProtectedRoute />}>
+            <Route path="AdminPanel" element={<AdminPanel />} />
+          </Route>
         </Route>
-        {/* --- RUTAS PROTEGIDAS PARA ADMIN --- */}
-        <Route element={<ProtectedRoute />}>
-          <Route path="/AdminPanel" element={<AdminPanel />} />
-        </Route>
-        {/* --- RUTA PARA PÁGINAS NO ENCONTRADAS --- */}
+
+        {/* --- RUTAS PROTEGIDAS --- */}
+        <Route path="/login" element={<Login />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </BrowserRouter>
-  );
-}
-
-export default RouterApp;
+    </BrowserRouter>);
+} export default RouterApp;
