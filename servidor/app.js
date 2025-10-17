@@ -1,6 +1,11 @@
 const express = require('express');
 const cors = require('cors');
-const path = require('path');
+const morgan = require('morgan');
+const connection = require('./config/db'); 
+
+const carritoRoutes = require('./routes/carrito'); 
+const authRoutes = require('./routes/auth'); 
+const authMiddleware = require('./middlewares/authMiddleware');
 
 const app = express();
 
@@ -12,26 +17,28 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization'], // permitir Authorization header
 }));
 
+// Middleware
+app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(morgan('dev'));
 
-// Servir archivos estáticos desde la carpeta uploads con ruta absoluta
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// Rutas
+app.use('/api/auth', authRoutes);          
+app.use('/api/auth/carrito', carritoRoutes);
 
-const db = require('./config/db');
+// Ruta base
+app.get('/', (req, res) => {
+  res.send('API funcionando correctamente 🚀');
+});
 
-// Importación de las rutas
-const authRoutes = require('./routes/auth');
-const productosRoutes = require('./routes/productos');
-const carritoRoutes = require('./routes/carrito');
+// Manejo de errores genérico
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: 'Error interno del servidor.' });
+});
 
-// Usar las rutas
-app.use('/api/auth', authRoutes);
-app.use('/api/productos', productosRoutes);
-app.use('/api/carrito', carritoRoutes);
-
-// Configuración del puerto
+// Iniciar servidor
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Servidor escuchando en el puerto ${PORT}`);
+  console.log(`Servidor corriendo en puerto ${PORT}`);
 });
