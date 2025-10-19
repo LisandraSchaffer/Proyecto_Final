@@ -1,6 +1,7 @@
 import Layout from "../components/Layout";
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+import Card from "../components/Card"; // Asegúrate de que la ruta sea correcta
 import "../styles/Home.css";
 import slide1 from "../assets/Utensilios-decorativos-cocina.jpg";
 import slide2 from "../assets/papel-cera-abeja.jpg";
@@ -10,8 +11,8 @@ import { CarritoContext } from "../context/CarritoContext.jsx";
 const Home = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [products, setProducts] = useState([]);
-  const [mensajeAgregado, setMensajeAgregado] = useState(false); 
-  const { agregarProducto } = useContext(CarritoContext); 
+  const [mensajeAgregado, setMensajeAgregado] = useState(false);
+  const { agregarProducto } = useContext(CarritoContext);
 
   const slides = [
     { id: 0, image: slide1, alt: 'Slider 1', caption: 'Accesorios decorativos' },
@@ -22,6 +23,7 @@ const Home = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
+        // La ruta es pública, no requiere token
         const response = await axios.get("http://localhost:3000/api/productos");
         setProducts(response.data);
       } catch (error) {
@@ -32,6 +34,7 @@ const Home = () => {
     fetchProducts();
   }, []);
 
+  // ... (nextSlide, prevSlide, goToSlide, useEffect para carrusel, y handleAgregar permanecen iguales) ...
   const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slides.length);
   const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
   const goToSlide = (index) => setCurrentSlide(index);
@@ -47,6 +50,7 @@ const Home = () => {
     setTimeout(() => setMensajeAgregado(false), 2500);
   };
 
+
   return (
     <main className="home-main">
       {/* Mensaje visual */}
@@ -56,7 +60,8 @@ const Home = () => {
         </div>
       )}
 
-      {/* Carrusel */}
+      {/* Carrusel (Sin cambios) */}
+      {/* ... (Todo el código del carrusel permanece igual) ... */}
       <div className="carousel slide" id="carouselExampleCaptions">
         <div className="carousel-indicators">
           {slides.map((_, index) => (
@@ -100,29 +105,29 @@ const Home = () => {
         </button>
       </div>
 
-      {/* Sección de inicio */}
+
+      {/* Sección de inicio (Sin cambios) */}
       <section id="inicio">
         <h1>Bienvenidos a Néctar de Sol</h1>
         <p>Un lugar para volverte a enamorar de tu hogar</p>
       </section>
 
-      {/* Sección de productos */}
+      {/* Sección de productos: USANDO EL COMPONENTE CARD */}
       <section id="productos">
         <h2>Conoce nuestros Productos</h2>
         <div className="product-grid">
           {products.length > 0 ? (
             products.map((product) => (
-              <div key={product.id} className="product-item">
-                <img
-                  src={`http://localhost:3000/uploads/${product.imagen}`}
-                  alt={product.nombre}
-                />
-                <h3>{product.nombre}</h3>
-                <p>Precio: ${product.precio}</p>
-                <button onClick={() => handleAgregar(product)}>
-                  Agregar al carrito
-                </button>
-              </div>
+              <Card
+                key={product.id}
+                nombre={product.nombre}
+                precio={product.precio}
+                descripcion={product.descripcion}
+                stock={product.stock}
+                categoria={product.categoria}
+                imagen_url={product.imagen_url} // <--- ¡Usamos la propiedad correcta!
+                onAgregar={() => handleAgregar(product)} // <--- Pasar la función de agregar
+              />
             ))
           ) : (
             <p>Cargando productos...</p>

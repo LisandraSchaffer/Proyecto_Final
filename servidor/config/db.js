@@ -1,9 +1,10 @@
 const mysql = require('mysql2');
 
+//cambiar password para que coincida con tu db y puedas logearte
 const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'admin123',
+  password: 'admin',
   database: 'tienda_online'
 });
 
