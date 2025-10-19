@@ -1,23 +1,24 @@
 import Layout from "../components/Layout";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import "../styles/Home.css";
 import slide1 from "../assets/Utensilios-decorativos-cocina.jpg";
 import slide2 from "../assets/papel-cera-abeja.jpg";
 import slide3 from "../assets/decorativos.jpg";
+import { CarritoContext } from "../context/CarritoContext.jsx";
 
 const Home = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [products, setProducts] = useState([]);
+  const [mensajeAgregado, setMensajeAgregado] = useState(false); 
+  const { agregarProducto } = useContext(CarritoContext); 
 
-  // Carrusel
   const slides = [
     { id: 0, image: slide1, alt: 'Slider 1', caption: 'Accesorios decorativos' },
     { id: 1, image: slide2, alt: 'Slider 2', caption: 'Productos para regalar' },
     { id: 2, image: slide3, alt: 'Slider 3', caption: 'Decorá tu hogar con Néctar de Sol' }
   ];
 
-  // Traer productos desde el backend
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -31,7 +32,6 @@ const Home = () => {
     fetchProducts();
   }, []);
 
-  // Funciones del carrusel
   const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slides.length);
   const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
   const goToSlide = (index) => setCurrentSlide(index);
@@ -41,8 +41,21 @@ const Home = () => {
     return () => clearInterval(interval);
   }, []);
 
+  const handleAgregar = (producto) => {
+    agregarProducto(producto);
+    setMensajeAgregado(true);
+    setTimeout(() => setMensajeAgregado(false), 2500);
+  };
+
   return (
     <main className="home-main">
+      {/* Mensaje visual */}
+      {mensajeAgregado && (
+        <div className="mensaje-agregado">
+          ¡Agregado al carrito! 🛍️
+        </div>
+      )}
+
       {/* Carrusel */}
       <div className="carousel slide" id="carouselExampleCaptions">
         <div className="carousel-indicators">
@@ -101,11 +114,14 @@ const Home = () => {
             products.map((product) => (
               <div key={product.id} className="product-item">
                 <img
-                  src={`http://localhost:3000/uploads/${product.imagen}`} // ruta de las imagenes en el back
+                  src={`http://localhost:3000/uploads/${product.imagen}`}
                   alt={product.nombre}
                 />
                 <h3>{product.nombre}</h3>
                 <p>Precio: ${product.precio}</p>
+                <button onClick={() => handleAgregar(product)}>
+                  Agregar al carrito
+                </button>
               </div>
             ))
           ) : (

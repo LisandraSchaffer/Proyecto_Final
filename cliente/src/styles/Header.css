@@ -89,9 +89,15 @@ header nav ul li a[href="/register"]::after {
   display: none;
 }
 
+/* --- Estilo para el ícono del carrito --- */
+.carrito-icon {
+  font-weight: 500;
+  color: #333;
+  text-decoration: none;
+}
 
 /* --- Estilos para el formulario de login --- */
-header nav>div {
+header nav > div {
   position: absolute;
   width: 50%;
   top: 100%;
@@ -148,7 +154,7 @@ header nav>div {
     text-align: left;
   }
 
-  header nav>div {
+  header nav > div {
     width: calc(100% - 3rem);
     right: auto;
     left: 0;
