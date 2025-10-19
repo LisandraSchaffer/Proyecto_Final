@@ -1,23 +1,33 @@
-//componente para crear las "tarjetas" para los productos de la web
 import React from "react";
 
-//estos son los datos que vienen de la base de datos para los productos
-const Card = ({ nombre, precio, descripcion, stock, categoria, imagen_url }) => {
+// Agregamos onAgregar para pasar la función del Home
+const Card = ({ nombre, precio, descripcion, stock, categoria, imagen_url, onAgregar }) => {
+
+  // Si la URL es completa, la usamos. Si no, asumimos que es un archivo local en /uploads.
+  const finalImageUrl = imagen_url
+    ? imagen_url.includes('http')
+      ? imagen_url
+      : `http://localhost:3000/uploads/${imagen_url}`
+    : 'placeholder.jpg'; // Usar un placeholder si no hay imagen
+
   return (
-    <div className="card">
+    <div className="product-item">
       <section>
         <img
-          src={`http://localhost:3000/images/${imagen_url}`}
+          src={finalImageUrl}
           alt={nombre}
-          style={{ width: "200px", height: "200px", objectFit: "cover" }}
         />
       </section>
       <div>
-        <h2>{nombre}</h2>
-        <p>${precio}</p>
-        <p>{descripcion}</p>
+        <h3>{nombre}</h3>
+        <p>Precio: ${precio}</p>
+        <p>Descripción: {descripcion}</p>
         <p>Stock: {stock}</p>
         <p>Categoría: {categoria}</p>
+
+        <button onClick={onAgregar}>
+          Agregar al carrito
+        </button>
       </div>
     </div>
   );
